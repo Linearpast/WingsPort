@@ -54,6 +54,12 @@ public final class WingsItemsConfig {
 //	@Config.RequiresMcRestart
     public static final ConfigWingSettings DRAGON = new ConfigWingSettings(WingsMod.Names.DRAGON);
 
+    //	@Config.LangKey("config.wings.items.entry.metallic")
+//	@Config.LangKey("config.wings.items.entry.metallic")
+//	@Config.RequiresMcRestart
+    //public static final ConfigWingSettings METALLIC = new ConfigWingSettings(WingsMod.Names.METALLIC);
+
+
     public static ImmutableMap<ResourceLocation, WingSettings> createWingAttributes() {
         return Stream.of(ANGEL, PARROT, SLIME, BLUE_BUTTERFLY, MONARCH_BUTTERFLY, FIRE, BAT, FAIRY, EVIL, DRAGON)
             .collect(ImmutableMap.toImmutableMap(ConfigWingSettings::getKey, ConfigWingSettings::toImmutable));

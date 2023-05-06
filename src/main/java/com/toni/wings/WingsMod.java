@@ -28,7 +28,8 @@ public final class WingsMod {
 
     public static final Registry<FlightApparatus> WINGS = new DefaultedRegistry<>(Names.NONE.toString(), ResourceKey.createRegistryKey(new ResourceLocation(ID, "wings")), Lifecycle.experimental(), null);
 
-    public static final FlightApparatus NONE_WINGS = Registry.register(WINGS, Names.NONE, FlightApparatus.NONE);
+    public static final FlightApparatus NONE = Registry.register(WINGS, Names.NONE, FlightApparatus.NONE);
+    public static final FlightApparatus WINGLESS = Registry.register(WINGS, Names.WINGLESS, FlightApparatus.NONE);
     public static final FlightApparatus ANGEL_WINGS = Registry.register(WINGS, Names.ANGEL, new SimpleFlightApparatus(WingsItemsConfig.ANGEL));
 	public static final FlightApparatus PARROT_WINGS = Registry.register(WINGS, Names.PARROT, new SimpleFlightApparatus(WingsItemsConfig.PARROT));
     public static final FlightApparatus BAT_WINGS = Registry.register(WINGS, Names.BAT, new SimpleFlightApparatus(WingsItemsConfig.BAT));
@@ -39,6 +40,8 @@ public final class WingsMod {
     public static final FlightApparatus MONARCH_BUTTERFLY_WINGS = Registry.register(WINGS, Names.MONARCH_BUTTERFLY, new SimpleFlightApparatus(WingsItemsConfig.MONARCH_BUTTERFLY));
     public static final FlightApparatus SLIME_WINGS = Registry.register(WINGS, Names.SLIME, new SimpleFlightApparatus(WingsItemsConfig.SLIME));
     public static final FlightApparatus FIRE_WINGS = Registry.register(WINGS, Names.FIRE, new SimpleFlightApparatus(WingsItemsConfig.FIRE));
+    //public static final FlightApparatus METALLIC_WINGS = Registry.register(WINGS, Names.METALLIC, new SimpleFlightApparatus(WingsItemsConfig.METALLIC));
+
 
     private Proxy proxy;
 
@@ -89,7 +92,9 @@ public final class WingsMod {
 
         public static final ResourceLocation
             NONE = create("none"),
+            WINGLESS = create("wingless"),
             ANGEL = create("angel_wings"),
+            //METALLIC = create("metallic_wings"),
             PARROT = create("parrot_wings"),
             SLIME = create("slime_wings"),
             BLUE_BUTTERFLY = create("blue_butterfly_wings"),

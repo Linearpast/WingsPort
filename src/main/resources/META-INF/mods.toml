@@ -1,12 +1,12 @@
 modLoader = "javafml"
 loaderVersion = "[34,)"
-issueTrackerURL = "https://github.com/pau101/Wings/issues" #change
+issueTrackerURL = "https://github.com/jowashere/WingsPort/issues"
 license = "MIT"
 [[mods]]
 modId = "wings"
 version = "${file.jarVersion}"
 displayName = "Wings"
-displayURL = "https://minecraft.curseforge.com/projects/wings" #change
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/wings-2"
 authors = "toni"
 description = "This is a port of the Wings mod. It introduces an assortment of avian and insectoid wings for all of your aerial travel needs."
 logoFile = "logo.png"

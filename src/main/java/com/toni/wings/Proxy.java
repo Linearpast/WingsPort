@@ -15,10 +15,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.BiConsumer;
@@ -29,7 +32,6 @@ public abstract class Proxy {
     public void init(IEventBus modBus) {
         modBus.addListener(this::setup);
         modBus.addListener(this::registerCapabilities);
-        LayerWings.init();
     }
 
     protected void setup(FMLCommonSetupEvent event) {
@@ -54,6 +56,7 @@ public abstract class Proxy {
             reg.accept(Items.BLAZE_POWDER, WingsItems.FIRE_WINGS_BOTTLE);
             reg.accept(Items.ORANGE_DYE, WingsItems.MONARCH_BUTTERFLY_WINGS_BOTTLE);
             reg.accept(Items.SLIME_BALL, WingsItems.SLIME_WINGS_BOTTLE);
+            //reg.accept(Items.IRON_INGOT, WingsItems.METALLIC_WINGS_BOTTLE);
         });
     }
 

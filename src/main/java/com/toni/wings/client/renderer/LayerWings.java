@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.toni.wings.WingsMod;
 import com.toni.wings.client.flight.FlightViews;
+import com.toni.wings.client.model.ModelWingsAvian;
 import com.toni.wings.client.model.ModelWingsInsectoid;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -20,6 +21,7 @@ public final class LayerWings extends RenderLayer<LivingEntity, HumanoidModel<Li
     private final TransformFunction transform;
 
     public static final ModelLayerLocation INSECTOID_WINGS = layer("insectoid_wings");
+    public static final ModelLayerLocation AVIAN_WINGS = layer("avian_wings");
 
     public static void init()
     {
@@ -49,6 +51,7 @@ public final class LayerWings extends RenderLayer<LivingEntity, HumanoidModel<Li
     public static void initLayers(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
         event.registerLayerDefinition(INSECTOID_WINGS, ModelWingsInsectoid::createBodyLayer);
+        event.registerLayerDefinition(AVIAN_WINGS, ModelWingsAvian::createBodyLayer);
     }
 
     private static ModelLayerLocation layer(String name)

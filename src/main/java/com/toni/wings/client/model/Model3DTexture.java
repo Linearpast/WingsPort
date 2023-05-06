@@ -37,10 +37,10 @@ public final class Model3DTexture extends ModelPart.Cube {
         this.u2 = u2;
         this.v2 = v2;
         int faceCount = 2 + 2 * width + 2 * height;
-        final String MODEL_BOX_QUADS = "field_78254_i"; // quads
+        final String MODEL_BOX_QUADS = "f_104341_"; // quads
         Object quadsOld = Objects.requireNonNull(ObfuscationReflectionHelper.getPrivateValue(ModelPart.Cube.class, this, MODEL_BOX_QUADS));
         Class<?> texturedQuadClass = quadsOld.getClass().getComponentType();
-        Object vertexPositionsArray = getPrivateValue(((Object[]) quadsOld)[0], "field_78239_a"); // vertexPositions
+        Object vertexPositionsArray = getPrivateValue(((Object[]) quadsOld)[0], "f_104359_"); // vertexPositions
         Class<?> positionTextureVertexClass = vertexPositionsArray.getClass().getComponentType();
         Constructor<?> positionTextureVertexCtor;
         try {
@@ -113,17 +113,18 @@ public final class Model3DTexture extends ModelPart.Cube {
         return Objects.requireNonNull(ObfuscationReflectionHelper.getPrivateValue((Class<E>) object.getClass(), object, fieldName));
     }
 
-    public static Model3DTexture create(
+    public static ModelPart.Cube create(
         float posX, float posY, float posZ,
         int width, int height,
         int u, int v,
         int textureWidth, int textureHeight
     ) {
-        return new Model3DTexture(
-            posX, posY, posZ,
-            width, height,
-            (float) u, (float) v,
-            (float) (u + width), (float) (v + height)
+        ModelPart.Cube cube = new Model3DTexture(
+                posX, posY, posZ,
+                width, height,
+                (float) u, (float) v,
+                (float) (u + width), (float) (v + height)
         );
+        return cube;
     }
 }

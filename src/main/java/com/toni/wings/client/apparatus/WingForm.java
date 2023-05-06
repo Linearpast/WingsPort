@@ -1,6 +1,7 @@
 package com.toni.wings.client.apparatus;
 
 import com.toni.wings.client.flight.Animator;
+import com.toni.wings.client.flight.AnimatorAvian;
 import com.toni.wings.client.model.ModelWings;
 import com.toni.wings.server.apparatus.FlightApparatus;
 import net.minecraft.resources.ResourceLocation;
@@ -15,12 +16,13 @@ public final class WingForm<A extends Animator> {
 
     private final Supplier<A> animator;
 
-    private final ModelWings<A> model;
+    private ModelWings<A> model;
 
     private final ResourceLocation texture;
 
     private WingForm(Supplier<A> animator, ModelWings<A> model, ResourceLocation texture) {
         this.animator = animator;
+
         this.model = model;
         this.texture = texture;
     }
@@ -31,6 +33,10 @@ public final class WingForm<A extends Animator> {
 
     public ModelWings<A> getModel() {
         return this.model;
+    }
+
+    public void setModel(ModelWings model){
+        this.model = model;
     }
 
     public ResourceLocation getTexture() {
@@ -48,4 +54,14 @@ public final class WingForm<A extends Animator> {
     public static void register(FlightApparatus wings, WingForm<?> form) {
         FORMS.put(wings, form);
     }
+
+    public static Map<FlightApparatus, WingForm<?>> getFormsMap(){
+        return FORMS;
+    }
+
+    public static boolean isEmpty(){
+        return FORMS.isEmpty();
+    }
+
+
 }

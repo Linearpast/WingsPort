@@ -13,14 +13,12 @@ public interface Flight {
     default void setIsFlying(boolean isFlying) {
         this.setIsFlying(isFlying, PlayerSet.empty());
     }
-
     void setIsFlying(boolean isFlying, PlayerSet players);
 
     boolean isFlying();
-
     default void toggleIsFlying(PlayerSet players) {
         this.setIsFlying(!this.isFlying(), players);
-        System.out.println("Flight set to " + this.isFlying());
+        //System.out.println("Flight set to " + this.isFlying());
     }
 
     void setTimeFlying(int timeFlying);
@@ -43,6 +41,7 @@ public interface Flight {
 
     boolean canFly(Player player);
 
+    boolean hasEffect(Player player);
     boolean canLand(Player player);
 
     void tick(Player player);

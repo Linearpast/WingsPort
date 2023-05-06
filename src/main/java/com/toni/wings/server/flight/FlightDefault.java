@@ -1,7 +1,6 @@
 package com.toni.wings.server.flight;
 
 import com.google.common.collect.Lists;
-import com.mojang.math.Vector3d;
 import com.toni.wings.WingsMod;
 import com.toni.wings.server.apparatus.FlightApparatus;
 import com.toni.wings.server.effect.WingsEffects;
@@ -115,10 +114,11 @@ public final class FlightDefault implements Flight {
 
     @Override
     public boolean canFly(Player player) {
-        return this.hasEffect(player) && this.flightApparatus.isUsable(player);
+        return (this.hasEffect(player) && this.flightApparatus.isUsable(player));
     }
 
-    private boolean hasEffect(Player player) {
+    @Override
+    public boolean hasEffect(Player player) {
         return WingsEffects.WINGS.filter(effect -> player.getEffect(effect) != null).isPresent();
     }
 
@@ -169,6 +169,9 @@ public final class FlightDefault implements Flight {
     @Override
     public void tick(Player player) {
         if (this.hasEffect(player) || !player.isEffectiveAi()) {
+            if(!this.hasEffect(player)){
+                this.setWing(FlightApparatus.NONE, PlayerSet.ofAll());
+            }
             this.onWornUpdate(player);
         } else if (!player.level.isClientSide) {
             this.setWing(FlightApparatus.NONE, PlayerSet.ofAll());
