@@ -1,6 +1,4 @@
-# Wings
+# Wings Port
 
-[![GitHub](https://img.shields.io/github/license/pau101/Wings.svg)](https://github.com/pau101/Wings/blob/master/LICENSE.md)
-[![](http://cf.way2muchnoise.eu/full_wings_downloads.svg)](https://minecraft.curseforge.com/projects/wings)
-
-Wings is a Forge mod for Minecraft: Java Edition which introduces an assortment of avian and insectoid wings for aerial travel.
+Wings is a port of the Forge mod for Minecraft: Java Edition which introduces an assortment of avian and insectoid wings for aerial travel.
+The original mod is by pau101.
