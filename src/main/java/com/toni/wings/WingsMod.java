@@ -40,7 +40,7 @@ public final class WingsMod {
     public static final FlightApparatus MONARCH_BUTTERFLY_WINGS = Registry.register(WINGS, Names.MONARCH_BUTTERFLY, new SimpleFlightApparatus(WingsItemsConfig.MONARCH_BUTTERFLY));
     public static final FlightApparatus SLIME_WINGS = Registry.register(WINGS, Names.SLIME, new SimpleFlightApparatus(WingsItemsConfig.SLIME));
     public static final FlightApparatus FIRE_WINGS = Registry.register(WINGS, Names.FIRE, new SimpleFlightApparatus(WingsItemsConfig.FIRE));
-    //public static final FlightApparatus METALLIC_WINGS = Registry.register(WINGS, Names.METALLIC, new SimpleFlightApparatus(WingsItemsConfig.METALLIC));
+    public static final FlightApparatus METALLIC_WINGS = Registry.register(WINGS, Names.METALLIC, new SimpleFlightApparatus(WingsItemsConfig.METALLIC));
 
 
     private Proxy proxy;
@@ -94,7 +94,7 @@ public final class WingsMod {
             NONE = create("none"),
             WINGLESS = create("wingless"),
             ANGEL = create("angel_wings"),
-            //METALLIC = create("metallic_wings"),
+            METALLIC = create("metallic_wings"),
             PARROT = create("parrot_wings"),
             SLIME = create("slime_wings"),
             BLUE_BUTTERFLY = create("blue_butterfly_wings"),

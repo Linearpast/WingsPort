@@ -8,12 +8,9 @@ var PlayerEntity = net.minecraft.world.entity.player.Player,
     Entity = net.minecraft.world.entity.Entity,
     WingsHooks = com.toni.wings.server.asm.WingsHooks,
     WingsHooksClient = com.toni.wings.server.asm.WingsHooksClient,
-    ResourceLocation = net.minecraft.resources.ResourceLocation,
     ServerPlayNetHandler = net.minecraft.server.network.ServerGamePacketListenerImpl,
     ServerPlayerEntity = net.minecraft.server.level.ServerPlayer,
     CPlayerPacket = net.minecraft.network.protocol.game.ServerboundMovePlayerPacket,
-    LivingEntity = net.minecraft.world.entity.LivingEntity,
-    ActiveRenderInfo = net.minecraft.client.Camera,
     FirstPersonRenderer = net.minecraft.client.renderer.ItemInHandRenderer,
     AbstractClientPlayerEntity = net.minecraft.client.player.AbstractClientPlayer,
     ClientPlayerEntity = net.minecraft.client.player.LocalPlayer,
@@ -46,38 +43,12 @@ easycore.inMethod(PlayerEntity.m_36378_(double, double, double)) // addMovementS
 /**
  * Use flying speed for player movement validation
  */
-easycore.inMethod(ServerPlayNetHandler.m_5682_(CPlayerPacket)) // processPlayer
+easycore.inMethod(ServerPlayNetHandler.m_7185_(CPlayerPacket)) // processPlayer
     .atEach(invokevirtual(ServerPlayerEntity.m_21255_(), boolean)).append( // isElytraFlying
         aload(0),
         getfield(ServerPlayNetHandler.f_9743_, ServerPlayerEntity), // player
         swap,
         invokestatic(WingsHooks.onFlightCheck(PlayerEntity, boolean), boolean)
-    )
-
-/**
- * Add GetCameraEyeHeightEvent
- */
-easycore.inMethod(ActiveRenderInfo.m_90565_()) // interpolateHeight
-    .atFirst(invokevirtual(Entity.m_20236_())).append( // getEyeHeight
-        aload(0),
-        getfield(ActiveRenderInfo.f_90551_, Entity), // interpolateHeight
-        swap,
-        invokestatic(WingsHooks.onGetCameraEyeHeight(Entity, float), float)
-    )
-
-/**
- * Add smooth body rotation while flying
- */
-easycore.inMethod(LivingEntity.m_5632_(float, float), float) // updateDistance
-    .atFirst().prepend(
-        aload(0),
-        fload(1),
-        invokestatic(WingsHooks.onUpdateBodyRotation(LivingEntity, float), boolean),
-        ifeq(L0 = label()),
-        bipush(0),
-        i2f,
-        freturn,
-        L0
     )
 
 /**

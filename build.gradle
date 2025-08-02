@@ -1,94 +1,130 @@
+//file:noinspection VulnerableLibrariesLocal
 buildscript {
 	repositories {
-		maven { url = 'https://maven.minecraftforge.net' }
-		jcenter()
+		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
 		mavenCentral()
 	}
 	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: fg_version, changing: true
+		classpath 'org.spongepowered:mixingradle:0.7.+'
 	}
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'maven-publish'
+plugins {
+	id 'eclipse'
+	id 'idea'
+	id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+}
 
-def full_mod_version = "${minecraft_version}-${mod_version}"
-version = full_mod_version
+apply plugin: 'org.spongepowered.mixin'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+group = mod_group_id
+version = mod_version
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+base {
+	archivesName = mod_id
+}
+
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
 
 minecraft {
+	mappings channel: mapping_channel, version: mapping_version
+
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-	mappings channel: mappings_channel, version: minecraft_version
+
+	copyIdeResources = true
 
 	runs {
-		client {
+		configureEach {
 			workingDirectory project.file('run')
+			property 'forge.logging.markers', 'REGISTRIES'
+
 			property 'forge.logging.console.level', 'debug'
+
 			mods {
-				wings {
+				"${mod_id}" {
 					source sourceSets.main
 				}
 			}
+		}
+
+		client {
+			property 'forge.enabledGameTestNamespaces', mod_id
 		}
 
 		server {
-			workingDirectory project.file('run')
-			property 'forge.logging.console.level', 'debug'
-			mods {
-				wings {
-					source sourceSets.main
-				}
-			}
+			property 'forge.enabledGameTestNamespaces', mod_id
+			args '--nogui'
+		}
+
+		gameTestServer {
+			property 'forge.enabledGameTestNamespaces', mod_id
 		}
 
 		data {
-			workingDirectory project.file('run')
-			property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-			property 'forge.logging.console.level', 'debug'
-			args '--mod', 'wings', '--all', '--output', file('src/generated/resources/')
-			mods {
-				wings {
-					source sourceSets.main
-				}
-			}
+			property 'gradle.task', 'runData'
+			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 		}
 	}
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+	flatDir {
+		dir 'libs'
+	}
+	maven { // TOP
+		url "https://cursemaven.com"
+	}
+	maven { //mirror
+		name = "ModMaven"
+		url = "https://modmaven.dev"
+	}
+}
+mixin {
+	add sourceSets.main, mod_id+".refmap.json"
+	config "${mod_id}.mixins.json"
+	debug.export = true
+}
 dependencies {
-	minecraft "net.minecraftforge:forge:${project.forge_version}"
+	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
-jar {
+jar{
+	exclude "assets/am"
+}
+
+tasks.named('processResources', ProcessResources).configure {
+	var replaceProperties = [minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+							 forge_version       : forge_version, forge_version_range: forge_version_range,
+							 loader_version_range: loader_version_range,
+							 mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+							 mod_authors         : mod_authors, mod_description: mod_description,]
+
+	inputs.properties replaceProperties
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE;
+	filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+		expand replaceProperties + [project: project]
+	}
+}
+
+tasks.named('jar', Jar).configure {
 	manifest {
-		attributes([
-				"Specification-Title": "wings",
-				"Specification-Vendor": "toni",
-				"Specification-Version": "1", // We are version 1 of ourselves
-				"Implementation-Title": project.name,
-				"Implementation-Version": "${version}",
-				"Implementation-Vendor" :"toni",
-				"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-		])
+		attributes(["Specification-Title"     : mod_id,
+					"Specification-Vendor"    : mod_authors,
+					"Specification-Version"   : "1",
+					"Implementation-Title"    : project.name,
+					"Implementation-Version"  : project.jar.archiveVersion,
+					"Implementation-Vendor"   : mod_authors,
+					"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")])
 	}
+
+	finalizedBy 'reobfJar'
 }
 
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-	type 'jar'
-	builtBy 'reobfJar'
-}
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact reobfArtifact
-		}
-	}
-	repositories {
-		maven {
-			url "file:///${project.projectDir}/mcmodsrepo"
-		}
-	}
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
 }

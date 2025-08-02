@@ -40,10 +40,13 @@ public abstract class Proxy {
         event.enqueueWork(() -> {
             BiConsumer<ItemLike, RegistryObject<Item>> reg = (item, obj) -> {
                 BrewingRecipeRegistry.addRecipe(
-                    new PotionMix(Potions.SLOW_FALLING, Ingredient.of(item), new ItemStack(obj.get()))
+                    new PotionMix(Potions.SWIFTNESS, Ingredient.of(item), new ItemStack(obj.get()))
                 );
                 BrewingRecipeRegistry.addRecipe(
-                    new PotionMix(Potions.LONG_SLOW_FALLING, Ingredient.of(item), new ItemStack(obj.get()))
+                    new PotionMix(Potions.LONG_SWIFTNESS, Ingredient.of(item), new ItemStack(obj.get()))
+                );
+                BrewingRecipeRegistry.addRecipe(
+                        new PotionMix(Potions.STRONG_SWIFTNESS, Ingredient.of(item), new ItemStack(obj.get()))
                 );
             };
             reg.accept(Items.FEATHER, WingsItems.ANGEL_WINGS_BOTTLE);
@@ -56,7 +59,7 @@ public abstract class Proxy {
             reg.accept(Items.BLAZE_POWDER, WingsItems.FIRE_WINGS_BOTTLE);
             reg.accept(Items.ORANGE_DYE, WingsItems.MONARCH_BUTTERFLY_WINGS_BOTTLE);
             reg.accept(Items.SLIME_BALL, WingsItems.SLIME_WINGS_BOTTLE);
-            //reg.accept(Items.IRON_INGOT, WingsItems.METALLIC_WINGS_BOTTLE);
+            reg.accept(Items.IRON_INGOT, WingsItems.METALLIC_WINGS_BOTTLE);
         });
     }
 

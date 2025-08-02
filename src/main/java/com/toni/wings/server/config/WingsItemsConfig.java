@@ -57,7 +57,7 @@ public final class WingsItemsConfig {
     //	@Config.LangKey("config.wings.items.entry.metallic")
 //	@Config.LangKey("config.wings.items.entry.metallic")
 //	@Config.RequiresMcRestart
-    //public static final ConfigWingSettings METALLIC = new ConfigWingSettings(WingsMod.Names.METALLIC);
+    public static final ConfigWingSettings METALLIC = new ConfigWingSettings(WingsMod.Names.METALLIC);
 
 
     public static ImmutableMap<ResourceLocation, WingSettings> createWingAttributes() {

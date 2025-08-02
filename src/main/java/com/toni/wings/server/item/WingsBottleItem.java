@@ -66,7 +66,7 @@ public class WingsBottleItem extends Item {
             }
             return false;
         }).isPresent();
-        player.addEffect(new MobEffectInstance(WingsEffects.WINGS.get(), Integer.MAX_VALUE, 0, true, false));
+        player.addEffect(new MobEffectInstance(WingsEffects.WINGS.get(), 3600, 0, true, false));
         return changed;
     }
 

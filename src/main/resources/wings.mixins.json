@@ -1,0 +1,13 @@
+{
+  "package": "com.toni.wings.mixin",
+  "mixins": [
+    "client.LivingEntityMixin"
+  ],
+  "refmap": "orgasm.refmap.json",
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "client.CameraMixin"
+  ]
+}
